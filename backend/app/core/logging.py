@@ -10,6 +10,7 @@ from datetime import UTC, datetime
 
 _request_id: ContextVar[str | None] = ContextVar("request_id", default=None)
 _workflow_id: ContextVar[str | None] = ContextVar("workflow_id", default=None)
+_UVICORN_LOGGERS = ("uvicorn", "uvicorn.error", "uvicorn.access")
 
 
 @contextmanager
@@ -54,3 +55,9 @@ def setup_logging(level: str = "INFO") -> None:
         root.removeHandler(existing)
     root.addHandler(handler)
     root.setLevel(level.upper())
+
+    # uvicorn sets up its own text handlers. Send its records through the root JSON handler.
+    for name in _UVICORN_LOGGERS:
+        uvicorn_logger = logging.getLogger(name)
+        uvicorn_logger.handlers.clear()
+        uvicorn_logger.propagate = True
