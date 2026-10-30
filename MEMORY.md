@@ -23,8 +23,8 @@ Durable facts for this repository. `CLAUDE.md` wins if this file drifts. Update 
 - Background workflows run in-process for v1.
 - Image tags equal the git SHA once delivery exists. Nothing has been built or tagged yet.
 - Stage 17 (Agentic DevOps) is optional and depends on stages 13–16. It is outside core Project 1 completion.
-- 2026-10-25 — F14 / observability (planned design; code not in repo yet): process settings are `get_settings()` in `backend/app/core/config.py` (cached). JSON logs come from `setup_logging()` and `log_context()` in `backend/app/core/logging.py`. Every line includes `request_id` and `workflow_id` (`null` when unset). `model_dump()` redacts secrets and URL passwords; connection code reads the attributes.
-- 2026-10-25 — N3 (planned design; code not in repo yet): `RequestIdMiddleware` echoes a safe `X-Request-ID` or assigns a UUID, binds `log_context`, and sets the header on application responses, including 404 and 500. CORS sits outside it and exposes the header. `/health` and `/health/live` do not probe dependencies. `/health/ready` returns 200 `ready` or 503 `degraded` from configuration checks until the database, Redis, vector store, and LLM clients exist. Those details never include a URL, password, or API key.
+- 2026-10-25 — F14 / observability (implemented in P1-1): process settings are `get_settings()` in `backend/app/core/config.py` (cached). JSON logs come from `setup_logging()` and `log_context()` in `backend/app/core/logging.py`. Every line includes `request_id` and `workflow_id` (`null` when unset). `model_dump()` redacts secrets and URL passwords; connection code reads the attributes.
+- 2026-10-25 — N3 (implemented in P1-2): `RequestIdMiddleware` echoes a safe `X-Request-ID` or assigns a UUID, binds `log_context`, and sets the header on application responses, including 404 and 500. CORS sits outside it and exposes the header. `/health` and `/health/live` do not probe dependencies. `/health/ready` returns 200 `ready` or 503 `degraded` from configuration checks until the database, Redis, vector store, and LLM clients exist. Those details never include a URL, password, or API key.
 
 ## Roles
 
@@ -130,8 +130,8 @@ Update each row in place. Do not mark a row done from intention.
 | Surface | State on 2026-10-30 |
 |---|---|
 | Repository contents | Specification and planning files, `.env.example`, `README.md`, `Makefile` (only `setup` works; other targets are stubs that fail), and `.cursor/skills/supportdash-support/SKILL.md`. No backend, frontend, tests, sample data, database files, or CI files. Git has three commits and no feature branches. |
-| Implemented | P1-1 (settings and JSON logging) on `feature/backend-config-logging`, not merged: `backend/app/core/config.py` (`Settings`, cached `get_settings()`, secrets and URL passwords redacted in `model_dump()`) and `backend/app/core/logging.py` (`setup_logging()`, `log_context()`, JSON lines with `request_id` and `workflow_id`). P1-2 to P1-4 are Pending ❌ in `TASKS.md`. |
-| Validated locally | P1-1: `tests/unit/test_config_logging.py`, 14 passed on 2026-10-30 with `uv run pytest`. `make test` is still a stub until P1-3 adds the offline harness. Earlier claims of merged P1-1 and 24 passing health tests were withdrawn: those files are not in the repo. |
+| Implemented | P1-1 merged through PR #1 into `development`: `backend/app/core/config.py` and `backend/app/core/logging.py`. P1-2 on `feature/backend-health-request-id`, not merged: `GET /health`, `/health/live`, `/health/ready` (`backend/app/api/health.py`, `backend/app/core/health.py`), `RequestIdMiddleware` (`backend/app/middleware/request_id.py`), CORS exposing `X-Request-ID`, and the app factory (`backend/app/factory.py`). P1-3 and P1-4 are Pending ❌ in `TASKS.md`. |
+| Validated locally | 2026-10-30, `uv run pytest`: 30 passed (`tests/unit/test_config_logging.py`, `tests/api/test_health.py`). A live `uvicorn app.main:app` was checked with curl: probes return the documented bodies and every response carries `X-Request-ID`. `make test` is still a stub until P1-3 adds the offline harness. |
 | Cloud credentials | None used. |
 | Applied to a real account | Nothing. |
 | GitHub Actions | Workflow files are not in the repo. None have been executed. |

@@ -167,3 +167,14 @@ def test_exception_is_included_in_json(root_logger_restored, capsys):
         logging.getLogger("test").exception("failed")
     record = json.loads(capsys.readouterr().out.strip().splitlines()[-1])
     assert "RuntimeError: boom" in record["exc_info"]
+
+
+def test_uvicorn_loggers_use_root_json_handler(root_logger_restored, capsys):
+    setup_logging("INFO")
+    access = logging.getLogger("uvicorn.access")
+    assert access.handlers == []
+    assert access.propagate is True
+    access.info('%s - "%s %s" %d', "127.0.0.1", "GET", "/health", 200)
+    record = json.loads(capsys.readouterr().out.strip().splitlines()[-1])
+    assert record["logger"] == "uvicorn.access"
+    assert record["message"] == '127.0.0.1 - "GET /health" 200'
