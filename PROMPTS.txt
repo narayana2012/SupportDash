@@ -1,0 +1,4 @@
+#prompt 1
+you have access to the CLAUDE.md file which contains the specification for the supportdash project.
+I want you to create all the following required files the project like SKILL.md and MEMORY.md etc.
+
