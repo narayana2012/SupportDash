@@ -130,8 +130,8 @@ Update each row in place. Do not mark a row done from intention.
 | Surface | State on 2026-10-30 |
 |---|---|
 | Repository contents | Specification and planning files, `.env.example`, `README.md`, `Makefile` (only `setup` works; other targets are stubs that fail), and `.cursor/skills/supportdash-support/SKILL.md`. No backend, frontend, tests, sample data, database files, or CI files. Git has three commits and no feature branches. |
-| Implemented | Nothing in code. `TASKS.md` lists P1-1 and P1-2 as Pending ❌. An earlier note said P1-1 was merged and P1-2 was implemented locally. Neither is in this repo: `origin` has `main`, `development`, and `testing` at the scaffolding commits, with no feature branches and no merge commits. |
-| Validated locally | Nothing. An earlier note reported 24 passing tests in `tests/unit/test_config_logging.py` and `tests/api/test_health.py`. Those files are not in this repo, so the claim cannot be checked here and is withdrawn until they are. `make test` and `make demo` are stubs that fail. |
+| Implemented | P1-1 (settings and JSON logging) on `feature/backend-config-logging`, not merged: `backend/app/core/config.py` (`Settings`, cached `get_settings()`, secrets and URL passwords redacted in `model_dump()`) and `backend/app/core/logging.py` (`setup_logging()`, `log_context()`, JSON lines with `request_id` and `workflow_id`). P1-2 to P1-4 are Pending ❌ in `TASKS.md`. |
+| Validated locally | P1-1: `tests/unit/test_config_logging.py`, 14 passed on 2026-10-30 with `uv run pytest`. `make test` is still a stub until P1-3 adds the offline harness. Earlier claims of merged P1-1 and 24 passing health tests were withdrawn: those files are not in the repo. |
 | Cloud credentials | None used. |
 | Applied to a real account | Nothing. |
 | GitHub Actions | Workflow files are not in the repo. None have been executed. |

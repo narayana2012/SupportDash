@@ -12,6 +12,10 @@ wheels/
 # Secrets
 .env
 
+# Test and lint caches
+.pytest_cache/
+.ruff_cache/
+
 # Local data and infrastructure state (CLAUDE.md section 18, rule 11)
 data/
 *.db
