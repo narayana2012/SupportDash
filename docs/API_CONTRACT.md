@@ -4,7 +4,21 @@ Base URL: `http://localhost:8000` (env `NEXT_PUBLIC_API_URL`). All routes below 
 except the health routes. All non-auth routes require `Authorization: Bearer <jwt>`.
 Every response carries `X-Request-ID`. A caller-supplied value is echoed when it is 1–128 characters
 from `A-Za-z0-9._:-`; any other value is replaced with a UUID. CORS exposes `X-Request-ID`.
-Errors: `{ "detail": string }` with proper HTTP status.
+Errors: `{ "detail": string }` with proper HTTP status: 401 for a missing or invalid token, 403 for a role that is too low, 404 for an unknown id, 409 for the workflow conflicts listed below.
+
+## Access by role
+
+| Area | viewer | agent | admin |
+|---|---|---|---|
+| Read tickets, customers, knowledge, audit | yes | yes | yes |
+| Read dashboard, escalations, approvals, agents | yes (assumed) | yes | yes |
+| `POST /tickets`, `PATCH /tickets/{id}`, run, reply, request-info, escalate | 403 | yes | yes |
+| Approve and reject (`/approvals/{id}/approve`, `/reject`) | 403 | yes | yes |
+| `PATCH /escalations/{id}` | 403 | yes | yes |
+| `POST /knowledge/reindex` | 403 | 403 | yes |
+| `GET /settings` | 403 | 403 | yes |
+
+`CLAUDE.md` section 2 names the viewer read areas and the admin-only settings and reindex. It does not name the viewer's access to dashboard, escalations, approvals, or agents, so "yes (assumed)" needs confirmation before release.
 
 ## Health (no prefix, no auth)
 | Method | Path | Response |

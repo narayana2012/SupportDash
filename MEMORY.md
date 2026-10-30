@@ -23,8 +23,8 @@ Durable facts for this repository. `CLAUDE.md` wins if this file drifts. Update 
 - Background workflows run in-process for v1.
 - Image tags equal the git SHA once delivery exists. Nothing has been built or tagged yet.
 - Stage 17 (Agentic DevOps) is optional and depends on stages 13–16. It is outside core Project 1 completion.
-- 2026-10-25 — F14 / observability: process settings are `get_settings()` in `backend/app/core/config.py` (cached). JSON logs come from `setup_logging()` and `log_context()` in `backend/app/core/logging.py`. Every line includes `request_id` and `workflow_id` (`null` when unset). `model_dump()` redacts secrets and URL passwords; connection code reads the attributes.
-- 2026-10-25 — N3: `RequestIdMiddleware` echoes a safe `X-Request-ID` or assigns a UUID, binds `log_context`, and sets the header on application responses, including 404 and 500. CORS sits outside it and exposes the header. `/health` and `/health/live` do not probe dependencies. `/health/ready` returns 200 `ready` or 503 `degraded` from configuration checks until the database, Redis, vector store, and LLM clients exist. Those details never include a URL, password, or API key.
+- 2026-10-25 — F14 / observability (planned design; code not in repo yet): process settings are `get_settings()` in `backend/app/core/config.py` (cached). JSON logs come from `setup_logging()` and `log_context()` in `backend/app/core/logging.py`. Every line includes `request_id` and `workflow_id` (`null` when unset). `model_dump()` redacts secrets and URL passwords; connection code reads the attributes.
+- 2026-10-25 — N3 (planned design; code not in repo yet): `RequestIdMiddleware` echoes a safe `X-Request-ID` or assigns a UUID, binds `log_context`, and sets the header on application responses, including 404 and 500. CORS sits outside it and exposes the header. `/health` and `/health/live` do not probe dependencies. `/health/ready` returns 200 `ready` or 503 `degraded` from configuration checks until the database, Redis, vector store, and LLM clients exist. Those details never include a URL, password, or API key.
 
 ## Roles
 
@@ -127,15 +127,15 @@ Cases live in `datasets/eval_cases.json` and each case needs a valid `expected_c
 
 Update each row in place. Do not mark a row done from intention.
 
-| Surface | State on 2026-10-25 |
+| Surface | State on 2026-10-30 |
 |---|---|
-| Repository contents | Requirement files are in place. P1-1 is merged. P1-2 adds health routes, request-id middleware, and `tests/api/test_health.py`. Sample data and the rest of the backend are absent. `frontend/lib/types.ts` is still created in P12-2. |
-| Implemented | P1-1 merged: cached settings and JSON logging. P1-2, not merged: `GET /health`, `GET /health/live` (no dependency I/O), `GET /health/ready` (configuration probes, 503 when degraded), `RequestIdMiddleware`, and CORS exposing `X-Request-ID`. The pytest harness, Makefile, and `.env.example` are still absent. Ready probes do not open a database, Redis, Qdrant, or LLM connection. |
-| Validated locally | `tests/unit/test_config_logging.py` and `tests/api/test_health.py`: 24 passed on this machine. `make test` and `make demo` do not exist yet. This is not a Phase 1 exit. |
+| Repository contents | Specification and planning files, `.env.example`, `README.md`, `Makefile` (only `setup` works; other targets are stubs that fail), and `.cursor/skills/supportdash-support/SKILL.md`. No backend, frontend, tests, sample data, database files, or CI files. Git has three commits and no feature branches. |
+| Implemented | Nothing in code. `TASKS.md` lists P1-1 and P1-2 as Pending ❌. An earlier note said P1-1 was merged and P1-2 was implemented locally. Neither is in this repo: `origin` has `main`, `development`, and `testing` at the scaffolding commits, with no feature branches and no merge commits. |
+| Validated locally | Nothing. An earlier note reported 24 passing tests in `tests/unit/test_config_logging.py` and `tests/api/test_health.py`. Those files are not in this repo, so the claim cannot be checked here and is withdrawn until they are. `make test` and `make demo` are stubs that fail. |
 | Cloud credentials | None used. |
 | Applied to a real account | Nothing. |
 | GitHub Actions | Workflow files are not in the repo. None have been executed. |
-| Phase plan | Phase 1 is in progress (P1-1 merged, P1-2 implemented locally). Phases 2–13 are not started. |
+| Phase plan | Phase 1 not started in the repo. Phases 2–13 not started. |
 
 ## Open questions from `CLAUDE.md` §20
 

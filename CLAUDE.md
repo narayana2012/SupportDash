@@ -441,7 +441,7 @@ BASE_URL=http://localhost:8000 make smoke
 Windows: use `.venv/Scripts/python.exe`; `PYTHONPATH` must include `backend` (use `;` separator).
 Set `PYTHONIOENCODING=utf-8` for CLI output with symbols.
 
-Git and GitHub flow is in `Git_GitHub_Workflow_Guide.docx`. Feature branches open against `development`,
+Git and GitHub flow is in `docs/Git_GitHub_Workflow_Guide.md`. Feature branches open against `development`,
 then `development` promotes to `testing`, then `main`. Remote:
 `https://github.com/anulsasidharan/supportdash.git`.
 
@@ -543,7 +543,7 @@ this file. Stage 17 is optional and is not a core exit criterion.
 
 | Phase | Name | Status |
 |---|---|---|
-| 1 | Runtime skeleton | in progress |
+| 1 | Runtime skeleton | not started |
 | 2 | Persistence and demo data | not started |
 | 3 | Identity and request guards | not started |
 | 4 | Support API | not started |
@@ -561,8 +561,7 @@ this file. Stage 17 is optional and is not a core exit criterion.
 
 ## 20. Known gaps and open questions
 
-- `README.md` for Project 1 was referenced by the course documents but was not supplied; section 14
-  commands are taken from the stage docs and must be checked against it.
+- `README.md` was created on 2026-10-30 from section 14 and the phase plan, because the course README was not supplied. Check it against the course README if one arrives. Commands that do not exist yet are stubs in `Makefile`.
 - The course documents reference `../docs/…`, `../deployment-agent/…` and `../shared-infrastructure/…`
   that sit outside Project 1. Decide whether they are copied in or referenced.
 - Document counts differ slightly between files (for example tables: 16 in the database doc, 15 data

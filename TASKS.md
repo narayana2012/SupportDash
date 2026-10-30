@@ -3,7 +3,7 @@
 > Concise checklist for GitHub-visible progress.
 > Full plan: `PLAN.md` · Phase exit criteria: `PLAN_PHASE.md` · Spec: `CLAUDE.md`
 
-**Branch convention:** `feature/<repo-name>` (one feature branch per sub-task; open the PR against `development`)
+**Branch convention:** `feature/<name>` (one feature branch per sub-task; open the PR against `development`; see `docs/Git_GitHub_Workflow_Guide.md`)
 **Status:** `Pending ❌` · `Completed ✅`
 
 Sub-tasks in the same phase that do not share files can be open at the same time. Do not stack a branch on another feature branch. Merge the listed predecessor first when a row names one.

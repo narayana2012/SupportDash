@@ -12,7 +12,7 @@ supportdash — Autonomous Customer Support & Resolution Platform
 | Default integration branch | development |
 | Long-lived branches | development, testing, main |
 | Task tracker | TASKS.md — one feature/\<name\> branch per sub-task |
-| Remote status | Empty as of October 23, 2026. No commits have been pushed. |
+| Remote status | Checked 2026-10-30 with `git ls-remote --heads origin`: `main`, `development`, and `testing` exist on origin. No feature branches. The local clone's `origin` is `git@github.com:narayana2012/SupportDash.git`, which differs from the repository URL above. |
 
 This guide is how code moves for supportdash. Feature work branches from development and merges back through a pull request. testing and main are promotion branches for staging and production. Follow it so main stays releasable and every sub-task in TASKS.md has one reviewable branch.
 
@@ -95,7 +95,7 @@ Read these before the first feature branch. CLAUDE.md wins if another file disag
 
 # 3. First-time setup
 
-The GitHub repository is empty. The working copy on disk already has the specification files (CLAUDE.md, TASKS.md, PLAN.md, PLAN\_PHASE.md, MEMORY.md, docs/ARCHITECTURE.md, and this guide). Connect that copy to the remote, then create the three long-lived branches. Do this once.
+The GitHub repository already has `main`, `development`, and `testing` (checked 2026-10-30). Run `git ls-remote --heads origin` first, and use the seed steps below only if the remote has no branches. The working copy on disk already has the specification files (CLAUDE.md, TASKS.md, PLAN.md, PLAN\_PHASE.md, MEMORY.md, docs/ARCHITECTURE.md, and this guide). Connect that copy to the remote, then create the three long-lived branches. Do this once.
 
 ## Configure your identity (once per machine)
 
@@ -106,7 +106,7 @@ git config --global user.name "Your Full Name"
 git config --global user.email "you@example.com"
 ```
 
-## Seed the empty remote
+## Seed an empty remote (only if the remote has no branches)
 
 From the project directory, in PowerShell. Skip git init if the folder is already a repository.
 
@@ -114,7 +114,7 @@ From the project directory, in PowerShell. Skip git init if the folder is alread
 cd C:\Users\anuls\Videos\Euron_AgenticAI1.0
 git init
 git checkout -b main
-git add CLAUDE.md MEMORY.md PLAN.md PLAN_PHASE.md TASKS.md docs .cursor/skills Git_GitHub_Workflow_Guide.docx
+git add CLAUDE.md MEMORY.md PLAN.md PLAN_PHASE.md TASKS.md docs .cursor/skills
 git status
 git commit -m "docs: add supportdash specification and git workflow"
 git remote add origin https://github.com/anulsasidharan/supportdash.git
